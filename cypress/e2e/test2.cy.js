@@ -1,0 +1,66 @@
+describe('account details', () => {
+  it('Test case 1: Edit account details', () => {
+    cy.visit('https://automationteststore.com/')
+    // 1. მომხმარებლის დეტალებს შეცვლა -   Edit account details - + შეამოწმეთ რომ შენახვის შემდეგ ცვლილებები აისახა.
+    cy.get('#customer_menu_top > li > a').click()
+    cy.contains("I am a returning customer.").should("be.visible")
+    cy.get('.returncustomer > .loginbox > .heading4').should("have.text","I am a returning customer." )
+    cy.get('#loginFrm_loginname').click()
+    cy.get('#loginFrm_loginname').type("NiniKv")
+    cy.get('#loginFrm_password').click()
+    cy.get('#loginFrm_password').type("Prettycat123")
+    cy.get('#loginFrm > fieldset > .btn').click()
+    cy.get('.side_account_list > :nth-child(3) > a').click()
+    cy.get('.maintext').should("be.visible")
+    cy.contains("My Account Information")
+    cy.get('#AccountFrm_lastname').click()
+    cy.get('#AccountFrm_lastname').clear("Kvv")
+    cy.get('#AccountFrm_lastname').type("Kvaratskhelia")
+    cy.get('.col-md-12 > .btn-orange').click()
+    cy.get('.alert').should("be.visible")
+    cy.contains("Success: Your account has been successfully updated")
+
+    // 2. არსებული მისამართის შეცვლა ან ახალი მისამართის დამატება
+    cy.get('.side_account_list > :nth-child(5) > a').click()
+    cy.get('.maintext').should("be.visible")
+    cy.contains("Address Book")
+    cy.get('.heading4').should("be.visible")
+    cy.contains("Address Book Entries")
+    cy.get('address').should("be.visible")
+    cy.get('tr > .pull-right > .btn').click()
+    cy.get('#AddressFrm_address_1').click()
+    cy.get("#AddressFrm_address_1").clear();
+    cy.get("#AddressFrm_address_1").type("rustavelis15")
+    cy.get('.col-md-12 > .btn-orange').click()
+    cy.get('.alert').should("be.visible")
+    cy.contains("Your address has been successfully updated")
+
+    // 3. პაროლის შეცვლა
+    cy.get('.side_account_list > :nth-child(4) > a').click()
+    cy.get('.maintext').should("be.visible")
+    cy.contains("Change Password")
+    cy.get('#PasswordFrm_current_password').click()
+    cy.get('#PasswordFrm_current_password').type("Prettycat123")
+    cy.get('#PasswordFrm_password').click()
+    cy.get('#PasswordFrm_password').type("Qwerty123")
+    cy.get('#PasswordFrm_confirm').click()
+    cy.get('#PasswordFrm_confirm').type("Qwerty123")
+    cy.get('.col-md-12 > .btn-orange').click()
+    cy.get('.alert').should("be.visible")
+    
+    // ძველ პაროლზე დაბრუნება
+    cy.get('.side_account_list > :nth-child(4) > a').click()
+    cy.get('.maintext').should("be.visible")
+    cy.contains("Change Password")
+    cy.get('#PasswordFrm_current_password').click()
+    cy.get('#PasswordFrm_current_password').type("Qwerty123")
+    cy.get('#PasswordFrm_password').click()
+    cy.get('#PasswordFrm_password').type("Prettycat123")
+    cy.get('#PasswordFrm_confirm').click()
+    cy.get('#PasswordFrm_confirm').type("Prettycat123")
+    cy.get('.col-md-12 > .btn-orange').click()
+    cy.get('.alert').should("be.visible")
+    
+   
+  })
+})
